@@ -13,9 +13,29 @@ public class PrimaryController {
         Stage s = new Stage();
         DirectoryChooser f = new DirectoryChooser();
         File archivo = f.showDialog(s);
-        for (File x : archivo.listFiles()) {
-            System.out.println(x.getName());
-            System.out.println(x.length());
+        long tamanio=recorrerDirectorio(archivo);
+        System.out.println("FINALMENTE");
+        System.out.println(tamanio);
         }
+        
+    
+    public long recorrerDirectorio(File f){
+        //System.out.println(f.getName());    
+    long tamanio=0;
+    if(f.isFile()){
+    tamanio+=f.length();
+    System.out.println(f.getName());
+    System.out.println(f.length());
+    }else{
+    if(f.listFiles()==null){
+    //tamanio+=f.length();
+    }else{        
+    for (File x : f.listFiles()) {
+    tamanio+=recorrerDirectorio(x);        
+    }
+    }
+    }
+ 
+    return tamanio;
     }
 }
