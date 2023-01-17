@@ -1,4 +1,4 @@
-package proyectoedd2.proyecto2doparcialedd;
+package Proyecto;
 
 import java.io.File;
 import javafx.application.Application;

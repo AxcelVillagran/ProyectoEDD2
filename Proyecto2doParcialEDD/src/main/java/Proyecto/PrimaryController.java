@@ -1,4 +1,4 @@
-package proyectoedd2.proyecto2doparcialedd;
+package Proyecto;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import java.awt.Desktop;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.scene.text.Text;
 
 public class PrimaryController {
 
@@ -27,10 +31,14 @@ public class PrimaryController {
     Label labelRuta;
     @FXML
     Label labelPeso;
-    
+    @FXML
+    VBox tablaExtensiones;
+    @FXML
+    HBox hboxEncabezado;
     @FXML
     private void switchToSecondary() throws IOException {
         hboxR.getChildren().clear();
+        tablaExtensiones.getChildren().clear();
         Stage s=new Stage();
         DirectoryChooser f = new DirectoryChooser();
         File archivo = f.showDialog(s);
@@ -44,6 +52,8 @@ public class PrimaryController {
     
     
         public Pane recorridoEnAnchura(ArbolFiles<File> arbol) {
+            
+        Map<String,Integer>extensiones=new HashMap<>();
         Random ra = new Random();
         int low = 1;
         int high = 256;
@@ -73,9 +83,14 @@ public class PrimaryController {
             //System.out.println(eliminado.root.getName());
             if (eliminado.hijos != null) {
                 for (ArbolFiles<File> ar : eliminado.hijos) {
-//                PriorityQueue<ArbolFiles<File>>hijos=eliminado.hijos;
-//                while(!hijos.isEmpty()){
-//                    ArbolFiles<File> ar=hijos.poll();
+                    if(!ar.root.isDirectory() && getExtension(ar.root.getName()).length()<=4){
+                    String ext=getExtension(ar.root.getName());
+                    if(extensiones.containsKey(ext)){
+                    extensiones.put(ext,extensiones.get(ext)+1);
+                    }else{
+                    extensiones.put(ext,1);
+                    }
+                    }
                     cola.offer(ar);
                     Rectangle r;
                     if(corte%2==0){
@@ -103,13 +118,55 @@ public class PrimaryController {
                         labelRuta.setText("");
                         labelPeso.setText("");
                     });
+                    r.setOnMouseClicked(e->{
+                        abrirCarpeta(eliminado.root);
+                    });
                 }
                 corte+=1;
             }
             contador+=1;
         }
+        if(!extensiones.isEmpty()){
+        hboxEncabezado.setVisible(true);    
+        for(String exten:extensiones.keySet()){
+        agregarHBoxInfoExt(exten,extensiones.get(exten));
+        }
+        }else{
+        hboxEncabezado.setVisible(false);
+        }
         return p;
     }
     
+        public void abrirCarpeta(File ruta){
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            
+            desktop.open(ruta);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        }
+        
+        public String getExtension(String nombreArch){
+        //int i = nombreArch.lastIndexOf('.');
+        String[]arrayDoc=nombreArch.split("\\.");
+        String extension=arrayDoc[arrayDoc.length-1];
+        return extension;
+        }
+        
+        public void agregarHBoxInfoExt(String ext,int nrepeticiones){
+            HBox hboxFile = new HBox();
+            Text extension = new Text(ext);
+            extension.setStyle("-fx-font-size:18");
+            extension.setWrappingWidth(400);
+            Text nro = new Text(String.valueOf(nrepeticiones));
+            nro.setStyle("-fx-font-size:18");
+            nro.setWrappingWidth(400);
+            hboxFile.setSpacing(20);
+            hboxFile.setStyle("-fx-border-color:black");
+            hboxFile.getChildren().addAll(extension, nro);
+            tablaExtensiones.getChildren().addAll(hboxFile);
+        }
    
 }

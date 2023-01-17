@@ -1,4 +1,4 @@
-package proyectoedd2.proyecto2doparcialedd;
+package Proyecto;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

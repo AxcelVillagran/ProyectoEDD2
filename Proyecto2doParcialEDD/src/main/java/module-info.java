@@ -1,7 +1,7 @@
-module proyectoedd2.proyecto2doparcialedd {
+module Proyecto {
     requires javafx.controls;
     requires javafx.fxml;
-
-    opens proyectoedd2.proyecto2doparcialedd to javafx.fxml;
-    exports proyectoedd2.proyecto2doparcialedd;
+    requires java.desktop;
+    opens  Proyecto to javafx.fxml;
+    exports Proyecto;
 }
