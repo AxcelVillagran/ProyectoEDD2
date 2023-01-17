@@ -1,4 +1,4 @@
-package com.mycompany.pruebafilechooser;
+package proyectoedd2.proyecto2doparcialedd;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
