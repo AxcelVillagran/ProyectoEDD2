@@ -17,7 +17,7 @@ public class ArbolFiles<T>{
     
     File root;
     PriorityQueue<ArbolFiles<File>> hijos;
-    double pesoMB;
+    double pesoBytes;
     public ArbolFiles(File archivo) {
     if(archivo.isDirectory() && archivo.listFiles()!=null) {
 	root=archivo;
@@ -41,10 +41,10 @@ public class ArbolFiles<T>{
         hijos.offer(new ArbolFiles(fil));
         //contador+=1;
         }
-        pesoMB=App.contarPeso(archivo);
+        pesoBytes=App.contarPeso(archivo);
 	}else {
             root=archivo;
-            pesoMB=App.contarPeso(archivo);
+            pesoBytes=App.contarPeso(archivo);
             hijos=null;
 	}
 		

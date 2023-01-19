@@ -31,23 +31,20 @@ public class App extends Application {
         //System.out.println(f.getName());    
     double tamanio=0.0;
     if(f.isFile()){
-//        System.out.println(f.length());
-//        System.out.println(f.length()/1024.0);
-    tamanio+=(f.length()/1024.0/1024.0);
-        //System.out.println(tamanio);
-//    System.out.println(f.getName());
-//    System.out.println(f.length());
+
+    //tamanio+=(f.length()/1024.0/1024.0);
+        tamanio+=f.length();
+
+
     }else{
     if(f.listFiles()==null){
-    //tamanio+=f.length();
     }else{        
     for (File x : f.listFiles()) {
     tamanio+=contarPeso(x);        
     }
     }
     }
-        //System.out.println(tamanio);
-    tamanio=Math.round(tamanio*100.0)/100.0;
+    //tamanio=Math.round(tamanio*100.0)/100.0;
     return tamanio;
     }
     

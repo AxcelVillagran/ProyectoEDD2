@@ -94,12 +94,12 @@ public class PrimaryController {
                     cola.offer(ar);
                     Rectangle r;
                     if(corte%2==0){
-                        r=new Rectangle(referencia.getWidth(),referencia.getHeight()*ar.pesoMB/eliminado.pesoMB);
+                        r=new Rectangle(referencia.getWidth(),referencia.getHeight()*ar.pesoBytes/eliminado.pesoBytes);
                         r.setX(referenciaX);
                         r.setY(referenciaY);
                         referenciaY+=r.getHeight();
                     }else{
-                        r=new Rectangle(referencia.getWidth()*ar.pesoMB/eliminado.pesoMB,referencia.getHeight());
+                        r=new Rectangle(referencia.getWidth()*ar.pesoBytes/eliminado.pesoBytes,referencia.getHeight());
                         r.setX(referenciaX);
                         r.setY(referenciaY);
                         referenciaX+=r.getWidth();
@@ -112,7 +112,7 @@ public class PrimaryController {
                     r.setFocusTraversable(true);
                     r.setOnMouseEntered(e->{
                         labelRuta.setText(ar.root.getAbsolutePath());
-                        labelPeso.setText(String.valueOf(ar.pesoMB)+" MB ("+ar.pesoMB*1024.0*1024.0+" bytes)");
+                        labelPeso.setText(String.valueOf(Math.round((ar.pesoBytes/1024.0/1024.0)*100.0)/100.0)+" MB ("+ar.pesoBytes+" bytes)");
                     });
                     r.setOnMouseExited(e->{
                         labelRuta.setText("");
